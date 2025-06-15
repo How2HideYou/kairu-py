@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "kairu"
+version = "1.1"
+description = "カイルくん復活計画"
+authors = ["How2HideYou <44256326+How2HideYou@users.noreply.github.com>"]
+license = "GPL License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+bitstring = "^4.3.1"
+numpy = "^2.2.6"
+pillow = "^11.2.1"
+wxpython = "^4.2.3"
+langchain = "^0.3.25"
+langchain-ollama = { version = "^0.3.3", optional = true }
+langchain-openai = { version = "^0.3.18", optional = true }
+langchain-google-genai = { version = "^2.1.5", optional = true }
+
+[tool.poetry.extras]
+ollama = ["langchain-ollama"]
+openai = ["langchain-openai"]
+google-genai = ["langchain-google-genai"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
