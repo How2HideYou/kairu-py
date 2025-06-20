@@ -14,7 +14,7 @@ from ._sound import make_sure_sound_cache_exists
 _LOG = logging.getLogger(__name__)
 KAIRU_ROOT = str(files(__package__)) # type: ignore
 
-class AcsFile:
+class ACSFile:
     filename:  str
     _cache_dir: str
 
@@ -92,4 +92,4 @@ class AcsFile:
         _LOG.info(f'{path} にアニメーション情報を出力しました')
 
 
-__all__ = ('AcsFile', )
+__all__ = ('ACSFile', )

@@ -77,7 +77,7 @@ class AsyncEventLoopHolder:
         return self.event_loop.create_future()
 
 
-class AnimationBackend(AsyncEventLoopHolder):
+class GUIBackend(AsyncEventLoopHolder):
     """
     フレームの表示、音声再生、吹き出しの描画を担当する。
     """
@@ -160,7 +160,7 @@ class AnimController:
     本体ウィンドウのアニメーションの制御を行う。
     """
 
-    backend:        AnimationBackend
+    backend:        GUIBackend
 
     rand:           Random
     anim_infos:     dict[str, AnimInfo]
@@ -177,7 +177,7 @@ class AnimController:
 
 
     def __init__(self,
-        backend:        AnimationBackend,
+        backend:        GUIBackend,
         anim_infos:     dict[str, AnimInfo],
         state_infos:    dict[str, list[str]],
         *,
@@ -392,4 +392,4 @@ class AnimController:
         self._say_task.task.cancel(Stop)
 
 
-__all__ = ('StopAnimation', 'Stop', 'AnimationBackend', 'AnimationTask', 'SayTask', 'AnimController')
+__all__ = ('StopAnimation', 'Stop', 'GUIBackend', 'AnimationTask', 'SayTask', 'AnimController')

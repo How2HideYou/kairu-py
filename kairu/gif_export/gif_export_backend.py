@@ -5,19 +5,19 @@ from typing import Optional
 
 from PIL import Image
 
-from .acs_file import AcsFile
-from .anim_controller import AnimController, AnimationBackend, AsyncEventLoopHolder
-from .wx_backend.chat.chat import ChatBackend, ChatBackendError
-from .structs import AnimInfo, FrameInfo
-from .wx_backend.agent_window import AgentFrame
+from ..acs_file import ACSFile
+from ..anim_controller import AnimController, GUIBackend, AsyncEventLoopHolder
+from ..wx_backend.chat.chat import ChatBackend, ChatBackendError
+from ..structs import AnimInfo, FrameInfo
+from ..wx_backend.agent_window import AgentFrame
 
 
-class GifExportBackend(AnimationBackend):
-    acs:        AcsFile
+class GifExportBackend(GUIBackend):
+    acs:        ACSFile
     sprites:    list[Image.Image]
     gif_frames: list[tuple[Image.Image, int]] # (画像, ミリセカンド)
 
-    def __init__(self, acs:AcsFile, event_loop_holder:Optional[AsyncEventLoopHolder]=None):
+    def __init__(self, acs:ACSFile, event_loop_holder:Optional[AsyncEventLoopHolder]=None):
         if event_loop_holder is not None:
             super().__init__(event_loop_holder.event_loop, event_loop_holder.event_loop_thread)
         else:

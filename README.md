@@ -40,7 +40,7 @@ Microsoft AgentのACSファイルを直接読み込み、**アニメーション
 
 # 使い方
 
-Poetryでセットアップした場合は、 `poetry run run.py` で起動できます。
+Poetryでセットアップした場合は、 `poetry run python run.py` で起動できます。
 `-help` 引数を与えると、使用できる引数の一覧が出力されます。
 
 

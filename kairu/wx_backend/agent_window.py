@@ -8,8 +8,8 @@ import wx
 import wx.adv
 
 from ..dialogue import FrameInitializer, Message
-from ..acs_file import AcsFile
-from ..anim_controller import AnimController, AnimationBackend
+from ..acs_file import ACSFile
+from ..anim_controller import AnimController, GUIBackend
 from ..structs import AnimInfo, FrameInfo
 from .speech_bubble import SpeechBubbleFrame
 from ._wx_util import SinglePanelFrame, wrap_with_callafter
@@ -20,8 +20,8 @@ from .animation_visualizer import AnimationVisualizer
 _LOG = logging.getLogger(__name__)
 
 
-class AgentFrame(wx.Frame, AnimationBackend):
-    acs:           AcsFile
+class AgentFrame(wx.Frame, GUIBackend):
+    acs:           ACSFile
     sprites:       list[wx.Bitmap]
     sounds:        list[Optional[wx.adv.Sound]]
     anim_ctrl:     AnimController
@@ -37,12 +37,12 @@ class AgentFrame(wx.Frame, AnimationBackend):
 
     visualizer: Optional[SinglePanelFrame[AnimationVisualizer]] = None
 
-    def __init__(self, parent, acs:str|AcsFile, *, mute:bool=False, **anim_kwargs):
+    def __init__(self, parent, acs:str|ACSFile, *, mute:bool=False, **anim_kwargs):
         super(wx.Frame, self).__init__(parent, style=wx.FRAME_SHAPED|wx.SIMPLE_BORDER|wx.STAY_ON_TOP)
-        super(AnimationBackend, self).__init__()
+        super(GUIBackend, self).__init__()
 
         self._drag_delta = (0, 0)
-        self.acs = acs if isinstance(acs, AcsFile) else AcsFile.from_file(acs, decompression_progress_gui=False)
+        self.acs = acs if isinstance(acs, ACSFile) else ACSFile.from_file(acs, decompression_progress_gui=False)
         spritesheet_img = wx.Image(self.acs.spritesheet_path)
         spritesheet_img.ConvertAlphaToMask()
         spritesheet_bitmap:wx.Bitmap = spritesheet_img.ConvertToBitmap()
@@ -264,7 +264,7 @@ class AgentFrame(wx.Frame, AnimationBackend):
 
 
     @classmethod
-    def run(cls, acs:str|AcsFile, action:Optional[Callable[['AgentFrame', AnimController], Coroutine]]=None, **anim_kwargs):
+    def run(cls, acs:str|ACSFile, action:Optional[Callable[['AgentFrame', AnimController], Coroutine]]=None, **anim_kwargs):
         """
         Officeアシスタントを召喚し、閉じられるまで待機する。
         wxの仕様上、このメソッドはメインスレッドから呼び出さなければならない。
@@ -283,7 +283,7 @@ class AgentFrame(wx.Frame, AnimationBackend):
                 agent.acs.dump_animations()
 
             r"""
-            from .gif_export_backend import GifExportBackend
+            from ..gif_export.gif_export_backend import GifExportBackend
             gif_backend = GifExportBackend(agent.acs, agent)
             gif_anim_cont = AnimController(gif_backend, agent.acs.anim_infos, agent.anim_cont.state_infos, speed=0, no_idle=True, do_not_skip_frames=True)
             async def _(): return await gif_anim_cont.play_animation('GREETING')
