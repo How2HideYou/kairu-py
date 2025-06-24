@@ -32,10 +32,13 @@ Microsoft AgentのACSファイルを直接読み込み、**アニメーション
 
 # セットアップ方法 (Poetryを使用)
 
+Microsoft Agentのキャラクターファイル(カイルくんの場合は `DOLPHIN.ACS` )が必要になります。
+**本リポジトリには同梱されていないので、別途入手する必要がございます**。
+
 1. プロジェクトのルートに移動
 2. `poetry install` で必要なパッケージをインストール (もしくは、 `pyproject.toml` に従って手動で必要なパッケージをインストール)
 3. FFmpegをインストール (**Windowsでは不要**)
-4. カイルくんの実体 `DOLPHIN.ACS` を入手し、 `kairu/resources` に配置
+4. ACSファイルを入手し、 `kairu/resources` に配置
 
 
 # 使い方
